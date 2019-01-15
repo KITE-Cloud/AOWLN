@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Shape;
