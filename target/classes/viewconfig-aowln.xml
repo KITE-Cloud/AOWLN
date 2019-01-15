@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <VSNode splits="0.0 1.0">
+        <CNode>
+
+        </CNode>
+        <CNode>
+           <Component label="Aided Web Ontology Language Notation">
+               <Property id="pluginId" value="aowln_plugin.AOWLNViewComponent"/>
+           </Component>
+        </CNode>
+    </VSNode>
+</layout>

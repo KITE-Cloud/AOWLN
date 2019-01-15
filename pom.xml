@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>edu.stanford.swrl</groupId>
+        <artifactId>swrlapi-parent</artifactId>
+        <version>2.0.5</version>
+    </parent>
+
+    <groupId>de.thm</groupId>
+    <artifactId>aowln_plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>AOWLN-Tab</name>
+    <description>AOWLN-Tab Plugin for Desktop Protege 5.0+</description>
+    <packaging>bundle</packaging>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <slf4j.version>1.7.25</slf4j.version>
+        <swrlapi.version>2.0.5</swrlapi.version>
+        <swrlapi.drools.version>2.0.5</swrlapi.drools.version>
+        <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}\libs</directory>
+                            <targetPath>WEB-INF/lib</targetPath>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.plugin.version}</version>
+                <configuration>
+                    <scanIntervalSeconds>2</scanIntervalSeconds>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
+                        <Include-Resource>
+                            {maven-resources}
+                        </Include-Resource>
+                        <Bundle-ClassPath>.</Bundle-ClassPath>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Dependency>
+                            graphviz-java, logback-classic, groovy,
+                            swrlapi, swrlapi-drools-engine,
+                            axis, guava,
+                            drools-core, drools-compiler, knowledge-api, drools-reteoo, antlr-runtime, kie-api,
+                            kie-internal, mvel2, ecj,
+                            checker, checker-qual,
+                            commons-codec, commons-discovery, commons-io
+                        </Embed-Dependency>
+                        <Import-Package>
+                            com.ibm.icu.*;resolution:=optional,
+                            org.eclipse.swt.*;resolution:=optional,
+                            org.eclipse.jface.*;resolution:=optional,
+                            org.protege.editor.core.*;version="5.0.0",
+                            org.protege.editor.owl.*;version="5.0.0",
+                            org.semanticweb.owlapi.*;version="[4.2.5,5.0.0)",
+                            org.swrlapi.*;version="1.0.0",
+                            org.swrlapi.drools.*;version="1.0.0",
+                            com.ibm.*;resolution:=optional,
+                            com.sun.*;resolution:=optional,
+                            sun.*;resolution:=optional,
+                            javax.*;resolution:=optional,
+                            org.apache.tools.ant.*;resolution:=optional,
+                            org.apache.bsf.*;resolution:=optional,
+                            org.apache.commons.httpclient.*;resolution:=optional,
+                            org.apache.commons.logging.*;resolution:=optional,
+                            org.apache.commons.net.*;resolution:=optional,
+                            com.thoughtworks.xstream.*;resolution:=optional,
+                            com.google.protobuf.*;resolution:=optional,
+                            org.antlr.stringtemplate.*;resolution:=optional,
+                            org.codehaus.janino.*;resolution:=optional,
+                            org.eclipse.jdt.*;resolution:=optional,
+                            org.exolab.castor.xml.*;resolution:=optional,
+                            org.junit.*;resolution:=optional,
+                            ch.qos.logback.core.*;resolution:=optional,
+                            ch.qos.logback.classic.*;resolution:=optional,
+                            com.eclipsesource.v8.*;resolution:=optional,
+                            org.apache.batik.transcoder.*;resolution:=optional,
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>bundle-manifest</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+
+    <dependencies>
+        <dependency>
+            <groupId>guru.nidi</groupId>
+            <artifactId>graphviz-java</artifactId>
+            <version>0.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.galigator.openllet</groupId>
+            <artifactId>openllet-owlapi</artifactId>
+            <version>2.6.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sourceforge.owlapi</groupId>
+                    <artifactId>owlapi-distribution</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.swrl</groupId>
+            <artifactId>swrlapi</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.swrl</groupId>
+            <artifactId>swrlapi-drools-engine</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/org.protege.common -->
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>org.protege.common</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/protege-editor-owl -->
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>protege-editor-owl</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/org.protege.editor.owl -->
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>org.protege.editor.owl</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>2.5.5</version>
+        </dependency>
+
+
+    </dependencies>
+
+</project>
