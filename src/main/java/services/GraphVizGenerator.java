@@ -4,21 +4,22 @@ import guru.nidi.graphviz.attribute.Shape;
 import guru.nidi.graphviz.attribute.Style;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
-import guru.nidi.graphviz.model.*;
+import guru.nidi.graphviz.model.Label;
+import guru.nidi.graphviz.model.Link;
+import guru.nidi.graphviz.model.MutableGraph;
+import guru.nidi.graphviz.model.MutableNode;
+import model.DataModel;
 import model.MutableNodeExt;
 import tree.EdgeTypeEnum;
 import tree.GraphListsForViz;
 import tree.NodeConnection;
 import tree.NodeInfo;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static guru.nidi.graphviz.model.Factory.graph;
 import static guru.nidi.graphviz.model.Factory.mutNode;
-import static guru.nidi.graphviz.model.Link.to;
 
 public class GraphVizGenerator {
 
@@ -111,11 +112,16 @@ public class GraphVizGenerator {
 
         int imageWidth = nodes.length * PIXEL_PER_NODE;
 
-        System.out.println();
-        try {
-            Graphviz.fromGraph(graph).width(imageWidth).render(Format.PNG).toFile(new File("images/"+rulePart));
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Before");
+
+
+        BufferedImage image = Graphviz.fromGraph(graph).width(imageWidth).render(Format.PNG).toImage();
+
+        System.out.println("After" + image);
+        if(rulePart.contains("head")){
+            DataModel.getInstance().setCurrentHead(image);
+        }else if(rulePart.contains("body")){
+            DataModel.getInstance().setCurrentBody(image);
         }
     }
 

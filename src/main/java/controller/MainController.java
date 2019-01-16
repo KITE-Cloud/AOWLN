@@ -11,7 +11,6 @@ import tree.CustomSWRLAtom;
 import tree.GraphListsForViz;
 import view.AOWLNPanel;
 import view.AOWLNProtegeView;
-import view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +47,7 @@ public class MainController {
         aowlnPanel = new AOWLNPanel(this);
         protegeView.add(aowlnPanel, BorderLayout.CENTER);
 
-        dataModel = new DataModel();
+        dataModel = DataModel.getInstance();
         dataModel.registerObserver(aowlnPanel);
 
         this.aowlnEngine = new AOWLNEngine();
@@ -115,13 +114,13 @@ public class MainController {
         graphVizGenerator.generateGraphImage(vizListBody, "body.png");
         graphVizGenerator.generateGraphImage(vizListHead, "head.png");
 
-
+        System.out.println();
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
 
-                aowlnPanel.loadImages("body.png", "head.png");
+                aowlnPanel.loadImages();
 
             }
         });

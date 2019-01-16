@@ -23,7 +23,6 @@
         <slf4j.version>1.7.25</slf4j.version>
         <swrlapi.version>2.0.5</swrlapi.version>
         <swrlapi.drools.version>2.0.5</swrlapi.drools.version>
-        <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
     </properties>
 
     <build>
@@ -53,15 +52,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty.plugin.version}</version>
-                <configuration>
-                    <scanIntervalSeconds>2</scanIntervalSeconds>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
@@ -74,18 +64,21 @@
                         <Bundle-ClassPath>.</Bundle-ClassPath>
                         <Embed-Transitive>true</Embed-Transitive>
                         <Embed-Dependency>
-                            graphviz-java, logback-classic, groovy,
+                            graphviz-java,
                             swrlapi, swrlapi-drools-engine,
-                            axis, guava,
+                            axis,
                             drools-core, drools-compiler, knowledge-api, drools-reteoo, antlr-runtime, kie-api,
                             kie-internal, mvel2, ecj,
                             checker, checker-qual,
-                            commons-codec, commons-discovery, commons-io
+                            commons-codec, commons-discovery
                         </Embed-Dependency>
                         <Import-Package>
+                            guru.nidi.graphviz.engine.*;resolution:=optional,
                             com.ibm.icu.*;resolution:=optional,
                             org.eclipse.swt.*;resolution:=optional,
                             org.eclipse.jface.*;resolution:=optional,
+                            com.eclipsesource.*;resolution:=optional,
+                            org.apache.*;resolution:=optional,
                             org.protege.editor.core.*;version="5.0.0",
                             org.protege.editor.owl.*;version="5.0.0",
                             org.semanticweb.owlapi.*;version="[4.2.5,5.0.0)",
@@ -107,10 +100,6 @@
                             org.eclipse.jdt.*;resolution:=optional,
                             org.exolab.castor.xml.*;resolution:=optional,
                             org.junit.*;resolution:=optional,
-                            ch.qos.logback.core.*;resolution:=optional,
-                            ch.qos.logback.classic.*;resolution:=optional,
-                            com.eclipsesource.v8.*;resolution:=optional,
-                            org.apache.batik.transcoder.*;resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>
@@ -130,7 +119,6 @@
 
 
 
-
     <dependencies>
         <dependency>
             <groupId>guru.nidi</groupId>
@@ -139,67 +127,73 @@
         </dependency>
 
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.galigator.openllet</groupId>
-            <artifactId>openllet-owlapi</artifactId>
-            <version>2.6.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.sourceforge.owlapi</groupId>
-                    <artifactId>owlapi-distribution</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>edu.stanford.swrl</groupId>
             <artifactId>swrlapi</artifactId>
-            <version>2.0.1</version>
+            <version>${swrlapi.version}</version>
         </dependency>
+
         <dependency>
             <groupId>edu.stanford.swrl</groupId>
             <artifactId>swrlapi-drools-engine</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${swrlapi.drools.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/org.protege.common -->
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>org.protege.common</artifactId>
-            <version>4.3.0</version>
+            <artifactId>protege-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>protege-editor-core</artifactId>
+        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/protege-editor-owl -->
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>protege-editor-owl</artifactId>
-            <version>5.2.0</version>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/org.protege.editor.owl -->
         <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>org.protege.editor.owl</artifactId>
-            <version>4.3.0</version>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-osgidistribution</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy -->
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>2.5.5</version>
+            <groupId>org.apache.geronimo.bundles</groupId>
+            <artifactId>commons-discovery</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.equinox</groupId>
+            <artifactId>org.eclipse.equinox.registry</artifactId>
+            <version>3.5.0.v20100503</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>jdk8</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

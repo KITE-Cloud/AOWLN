@@ -1,23 +1,26 @@
 package view;
 
+import controller.MainController;
+import interfaces.ModelObserver;
+import model.DataModel;
+import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import controller.MainController;
-import interfaces.*;
-import org.semanticweb.owlapi.model.OWLException;
-import org.semanticweb.owlapi.model.OWLOntologyChange;
-import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 
 public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver, ChangeListener, ComponentListener, OWLOntologyChangeListener {
 
@@ -208,10 +211,10 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         fillRuleBox(rules);
     }
 
-    public void loadImages(String ruleBody, String ruleHead) {
-        rootImgBody = new ImageIcon("images/"+ruleBody).getImage();
+    public void loadImages() {
+        rootImgBody = DataModel.getInstance().getCurrentBody();
         rootImgBody.flush();
-        rootImgHead = new ImageIcon("images/"+ruleHead).getImage();
+        rootImgHead = DataModel.getInstance().getCurrentHead();
         rootImgHead.flush();
         updateCanvasArea("Body", initialImageZoom);
         updateCanvasArea("Head", initialImageZoom);
