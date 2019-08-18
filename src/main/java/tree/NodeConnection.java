@@ -1,9 +1,15 @@
 package tree;
 
+import java.io.Serializable;
+
 /**
  * Created by Thomas Farrenkopf on 19.06.2017.
  */
-public class NodeConnection {
+public class NodeConnection implements Serializable {
+
+
+    private static final long serialVersionUID = -7784394492127404634L;
+
     NodeInfo parent;
     NodeInfo child;
     EdgeTypeEnum type;

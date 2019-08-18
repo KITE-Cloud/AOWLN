@@ -3,6 +3,7 @@ package model;
 import interfaces.ModelObserver;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -24,6 +25,7 @@ public class DataModel {
     private ArrayList<String> SWRLRulesAsString;
     private BufferedImage currentHead;
     private BufferedImage currentBody;
+    private File graphVizEngine;
 
     private ArrayList<ModelObserver> observerList = new ArrayList<>();
 
@@ -35,7 +37,13 @@ public class DataModel {
         observerList.remove(modelObserver);
     }
 
+    public File getGraphVizEngine() {
+        return graphVizEngine;
+    }
 
+    public void setGraphVizEngine(File graphVizEngine) {
+        this.graphVizEngine = graphVizEngine;
+    }
 
     public ArrayList<String> getSWRLRulesAsString() {
         return SWRLRulesAsString;

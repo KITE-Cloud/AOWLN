@@ -6,6 +6,7 @@ import model.DataModel;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
+import services.StartUpEngine;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -16,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +54,29 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         initCanvasArea();
 
         this.addComponentListener(this);
+        
+        this.loadGraphVizEngine();
 
+    }
+
+    private void loadGraphVizEngine() {
+
+        StartUpEngine startUpEngine = new StartUpEngine();
+
+        JFrame frame = (JFrame)this.getTopLevelAncestor();
+
+        startUpEngine.displayFileChooserDialog(frame);
+
+        File selectedFile = startUpEngine.getSelectedFile();
+
+        /*JFileChooser chooser = new JFileChooser();
+        // Dialog zum Oeffnen von Dateien anzeigen
+        chooser.showOpenDialog(this);
+
+        chooser.setMultiSelectionEnabled(false);
+        File selectedFile = chooser.getSelectedFile();*/
+
+        DataModel.getInstance().setGraphVizEngine(selectedFile);
     }
 
     private void initCanvasArea() {
@@ -162,6 +186,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     }
 
     public void fillRuleBox(ArrayList<String> rules) {
+        java.util.Collections.sort(rules);
         if (ruleBox.getItemCount() > 0) ruleBox.removeAllItems();
         for (String renderedRule : rules) {
             ruleBox.addItem(renderedRule);
@@ -313,5 +338,14 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     @Override
     public void ontologiesChanged(@Nonnull List<? extends OWLOntologyChange> changes) throws OWLException {
 
+        System.out.println("ONTOLOGY HAS CHANGED");
+
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainController.getInstance().loadRulesfromOntology();
+            }
+        });
     }
 }

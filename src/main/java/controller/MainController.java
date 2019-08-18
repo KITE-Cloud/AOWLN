@@ -63,7 +63,7 @@ public class MainController {
 
 
 
-    private void loadRulesfromOntology() {
+    public void loadRulesfromOntology() {
 
         owlUtil = new OWLUtil();
         owlUtil.setOntology(protegeView.getOWLModelManager().getActiveOntology());
@@ -111,8 +111,10 @@ public class MainController {
         String fileNameHead = "head_"+swrlRule.getRuleName()+".png";
         String fileNameBody = "body_"+swrlRule.getRuleName()+".png";
 
-        graphVizGenerator.generateGraphImage(vizListBody, "body.png");
-        graphVizGenerator.generateGraphImage(vizListHead, "head.png");
+        graphVizGenerator.generateGraphImage(vizListBody, "body");
+        System.out.println("Body loaded");
+        graphVizGenerator.generateGraphImage(vizListHead, "head");
+        System.out.println("Head loaded");
 
         System.out.println();
 

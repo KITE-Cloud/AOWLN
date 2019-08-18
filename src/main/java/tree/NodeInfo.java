@@ -1,11 +1,15 @@
 package tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Thomas Farrenkopf on 19.06.2017.
  */
-public class NodeInfo {
+public class NodeInfo implements Serializable {
+
+    private static final long serialVersionUID = -1893127371755106415L;
+
     String caption;
     String info;
     String type;

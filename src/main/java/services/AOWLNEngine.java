@@ -46,8 +46,8 @@ public class AOWLNEngine {
                 String label = stringSplit(element.getPredicate().toString());
                 String key = stringSplit(((SWRLClassAtom) element).getArgument().toString());
                 ClassAtomCustom classAtom = new ClassAtomCustom(key, label);
-                System.out.println("classAtom Key: " + classAtom.getKey());
-                System.out.println("classAtom Label: " + classAtom.getLabel());
+                //System.out.println("classAtom Key: " + classAtom.getKey());
+                //System.out.println("classAtom Label: " + classAtom.getLabel());
                 classAtoms.add(classAtom);
 
             } else if (element instanceof SWRLDataPropertyAtom) {
@@ -57,9 +57,9 @@ public class AOWLNEngine {
                 DataPropertyAtomCustom dataPropAtom = new DataPropertyAtomCustom(firstArgument, key, label);
                 dataPropertyAtoms.add(dataPropAtom);
 
-                System.out.println("DataPropLabel: " + dataPropAtom.getLabel());
-                System.out.println("DataPropFristArgument: " + dataPropAtom.getFirstArgument());
-                System.out.println("DataPropKey: " + dataPropAtom.getKey());
+                //System.out.println("DataPropLabel: " + dataPropAtom.getLabel());
+                //System.out.println("DataPropFristArgument: " + dataPropAtom.getFirstArgument());
+                //System.out.println("DataPropKey: " + dataPropAtom.getKey());
             } else if (element instanceof SWRLBuiltInAtom) {
                 //bodyBuiltInAtoms.add(element);
                 //   String label = stringSplit(element.getPredicate().toString())+stringSplit(((SWRLBuiltInAtom) element).getArguments().toArray()[1].toString());
@@ -95,9 +95,9 @@ public class AOWLNEngine {
                 String firstArgument = stringSplit(((SWRLObjectPropertyAtom) element).getFirstArgument().toString());
                 ObjectPropertyAtomCustom objectPropAtom = new ObjectPropertyAtomCustom(firstArgument, key, label);
                 objectPropertyAtoms.add(objectPropAtom);
-                System.out.println("ObjectPropLabel: " + objectPropAtom.getLabel());
-                System.out.println("ObjectPropFirstArgument: " + objectPropAtom.getFirstArgument());
-                System.out.println("ObjectPropKey: " + objectPropAtom.getKey());
+                //System.out.println("ObjectPropLabel: " + objectPropAtom.getLabel());
+                //System.out.println("ObjectPropFirstArgument: " + objectPropAtom.getFirstArgument());
+                //System.out.println("ObjectPropKey: " + objectPropAtom.getKey());
             }
         }
 
