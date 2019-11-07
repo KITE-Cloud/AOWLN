@@ -1,0 +1,608 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/nguyen/ontologies/2019/7/untitled-ontology-57"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/nguyen/ontologies/2019/7/untitled-ontology-57">
+    <Prefix name="" IRI="http://www.semanticweb.org/nguyen/ontologies/2019/7/untitled-ontology-57"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Protein"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#C"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Blood_lipid_abnormality"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mild_hypertension"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasState"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#suffersFrom"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Moderate_hypertension"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasUnitOfMeasurement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Catalysis"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#damageofTargetOrgans"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasConcentrationValue"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Encyesis"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasValue"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#cardiovascularRiskLevel"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasSource"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isSuitableFor"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasContraindication"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#complicatedClinicalDisease"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasIndication"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Antihypertensive"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isForbiddenTo"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Unit"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#quantityOfCardiovascularRiskFactor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#caustiouslyTakes"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ExaminationData"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#deltaC"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Diabetes_NOS"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#forTime"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#HDL-C"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MmolPerLiter"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#diastolicPressure"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasExaminationData"/>
+    </Declaration>
+    <Declaration>
+        <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasCautiousCondition"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasQualityValue"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Metabolite"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasEnd"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#MmolPerLiter"/>
+        <Class IRI="#Unit"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Antihypertensive"/>
+        <Class IRI="#Blood_lipid_abnormality"/>
+        <Class IRI="#C"/>
+        <Class IRI="#Catalysis"/>
+        <Class IRI="#Diabetes_NOS"/>
+        <Class IRI="#Encyesis"/>
+        <Class IRI="#ExaminationData"/>
+        <Class IRI="#Metabolite"/>
+        <Class IRI="#Mild_hypertension"/>
+        <Class IRI="#Protein"/>
+        <Class IRI="#User"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Antihypertensive"/>
+        <Class IRI="#C"/>
+        <Class IRI="#Catalysis"/>
+        <Class IRI="#ExaminationData"/>
+        <Class IRI="#Metabolite"/>
+        <Class IRI="#Mild_hypertension"/>
+        <Class IRI="#Protein"/>
+        <Class IRI="#User"/>
+    </DisjointClasses>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#hasExaminationData"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#isForbiddenTo"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#isSuitableFor"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#cardiovascularRiskLevel"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#damageofTargetOrgans"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#diastolicPressure"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#hasCautiousCondition"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#hasContraindication"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#hasIndication"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#hasQualityValue"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <SubDataPropertyOf>
+        <DataProperty IRI="#hasUnitOfMeasurement"/>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+    </SubDataPropertyOf>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S7</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Antihypertensive"/>
+                <Variable IRI="y"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#suffersFrom"/>
+                <Variable IRI="x"/>
+                <Variable IRI="encyesis"/>
+            </ObjectPropertyAtom>
+            <ClassAtom>
+                <Class IRI="#Encyesis"/>
+                <Variable IRI="encyesis"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Diabetes_NOS"/>
+                <Variable IRI="diabetes_NOS"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#hasCautiousCondition"/>
+                <Variable IRI="y"/>
+                <Variable IRI="diabetes_NOS"/>
+            </DataPropertyAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Antihypertensive"/>
+                <Variable IRI="y"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#caustiouslyTakes"/>
+                <Variable IRI="x"/>
+                <Variable IRI="y"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S5</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Diabetes_NOS"/>
+                <Variable IRI="diabetes_NOS"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Antihypertensive"/>
+                <Variable IRI="y"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#suffersFrom"/>
+                <Variable IRI="x"/>
+                <Variable IRI="diabetes_NOS"/>
+            </ObjectPropertyAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#hasContraindication"/>
+                <Variable IRI="y"/>
+                <Variable IRI="diabetes_NOS"/>
+            </DataPropertyAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Antihypertensive"/>
+                <Variable IRI="y"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#isForbiddenTo"/>
+                <Variable IRI="y"/>
+                <Variable IRI="x"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S6</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Antihypertensive"/>
+                <Variable IRI="y"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Diabetes_NOS"/>
+                <Variable IRI="diabetes_NOS"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#suffersFrom"/>
+                <Variable IRI="x"/>
+                <Variable IRI="diabetes_NOS"/>
+            </ObjectPropertyAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#hasIndication"/>
+                <Variable IRI="y"/>
+                <Variable IRI="diabetes_NOS"/>
+            </DataPropertyAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Antihypertensive"/>
+                <Variable IRI="y"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#isSuitableFor"/>
+                <Variable IRI="y"/>
+                <Variable IRI="x"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S3</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#quantityOfCardiovascularRiskFactor"/>
+                <Variable IRI="x"/>
+                <Variable IRI="y"/>
+            </DataPropertyAtom>
+            <ClassAtom>
+                <Class IRI="#HDL-C"/>
+                <Variable IRI="z"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#hasExaminationData"/>
+                <Variable IRI="x"/>
+                <Variable IRI="z"/>
+            </ObjectPropertyAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#hasQualityValue"/>
+                <Variable IRI="z"/>
+                <Variable IRI="a"/>
+            </DataPropertyAtom>
+            <ClassAtom>
+                <Class IRI="#MmolPerLiter"/>
+                <Variable IRI="unit"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#hasUnitOfMeasurement"/>
+                <Variable IRI="a"/>
+                <Variable IRI="unit"/>
+            </DataPropertyAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#hasValue"/>
+                <Variable IRI="a"/>
+                <Variable IRI="b"/>
+            </DataPropertyAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#greaterThan">
+                <Variable IRI="b"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#float">3.3</Literal>
+            </BuiltInAtom>
+            <ClassAtom>
+                <Class IRI="#Blood_lipid_abnormality"/>
+                <Variable IRI="blood_lipid_abnormality"/>
+            </ClassAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Blood_lipid_abnormality"/>
+                <Variable IRI="blood_lipid_abnormality"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#suffersFrom"/>
+                <Variable IRI="x"/>
+                <Variable IRI="blood_lipid_abnormality"/>
+            </ObjectPropertyAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#quantityOfCardiovascularRiskFactor"/>
+                <Variable IRI="x"/>
+                <Variable IRI="y"/>
+            </DataPropertyAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#add">
+                <Variable IRI="y"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">1</Literal>
+            </BuiltInAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S4</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#cardiovascularRiskLevel"/>
+                <Variable IRI="x"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">1</Literal>
+            </DataPropertyAtom>
+            <ClassAtom>
+                <Class IRI="#C"/>
+                <Variable IRI="c"/>
+            </ClassAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#C"/>
+                <Variable IRI="c"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#isSuitableFor"/>
+                <Variable IRI="c"/>
+                <Variable IRI="x"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S1</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="urn:swrl#x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Mild_hypertension"/>
+                <Variable IRI="urn:swrl#d"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#quantityOfCardiovascularRiskFactor"/>
+                <Variable IRI="urn:swrl#x"/>
+                <Variable IRI="urn:swrl#y"/>
+            </DataPropertyAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual">
+                <Variable IRI="urn:swrl#y"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">1</Literal>
+            </BuiltInAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#damageofTargetOrgans"/>
+                <Variable IRI="urn:swrl#x"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">0</Literal>
+            </DataPropertyAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#complicatedClinicalDisease"/>
+                <Variable IRI="urn:swrl#x"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+            </DataPropertyAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#suffersFrom"/>
+                <Variable IRI="urn:swrl#x"/>
+                <Variable IRI="urn:swrl#d"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="urn:swrl#x"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#cardiovascularRiskLevel"/>
+                <Variable IRI="urn:swrl#x"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">2</Literal>
+            </DataPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Annotation>
+            <AnnotationProperty IRI="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#boolean">true</Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string"></Literal>
+        </Annotation>
+        <Annotation>
+            <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+            <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">S2</Literal>
+        </Annotation>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#diastolicPressure"/>
+                <Variable IRI="x"/>
+                <Variable IRI="y"/>
+            </DataPropertyAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual">
+                <Variable IRI="y"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">100</Literal>
+            </BuiltInAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#lessThanOrEqual">
+                <Variable IRI="y"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">109</Literal>
+            </BuiltInAtom>
+            <ClassAtom>
+                <Class IRI="#Moderate_hypertension"/>
+                <Variable IRI="moderate_hypertension"/>
+            </ClassAtom>
+        </Body>
+        <Head>
+            <ClassAtom>
+                <Class IRI="#User"/>
+                <Variable IRI="x"/>
+            </ClassAtom>
+            <ClassAtom>
+                <Class IRI="#Moderate_hypertension"/>
+                <Variable IRI="moderate_hypertension"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#suffersFrom"/>
+                <Variable IRI="x"/>
+                <Variable IRI="moderate_hypertension"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
