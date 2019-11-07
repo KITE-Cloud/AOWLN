@@ -3,6 +3,7 @@ package view;
 import controller.MainController;
 import interfaces.ModelObserver;
 import model.DataModel;
+import org.apache.commons.io.FileUtils;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
@@ -18,11 +19,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+
 
 public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver, ChangeListener, ComponentListener, OWLOntologyChangeListener {
 
@@ -60,14 +66,33 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     }
 
     private void loadGraphVizEngine() {
+        File image_engine = new File(this.getParent(this.getParent(this.getPluginLocation())), "aowln-image-engine.jar");
+        boolean fileExists = image_engine.exists();
 
-        StartUpEngine startUpEngine = new StartUpEngine();
+        if(fileExists){
+            DataModel.getInstance().setGraphVizEngine(image_engine);
+        }else {
 
-        JFrame frame = (JFrame)this.getTopLevelAncestor();
+            StartUpEngine startUpEngine = new StartUpEngine();
 
-        startUpEngine.displayFileChooserDialog(frame);
+            JFrame frame = (JFrame) this.getTopLevelAncestor();
 
-        File selectedFile = startUpEngine.getSelectedFile();
+            startUpEngine.displayFileChooserDialog(frame);
+
+            File selectedFile = startUpEngine.getSelectedFile();
+
+            try {
+                String path = getPluginLocation();
+
+                String decodedPath = URLDecoder.decode(path, "UTF-8");
+                System.out.println("Decoded Path of AOWLNPanel = " + decodedPath);
+                System.out.println("Decoded Path 2 of AOWLNPanel = " + this.getParent(this.getParent(decodedPath)));
+
+                copyFileToProtegeDirectory(selectedFile);
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
         /*JFileChooser chooser = new JFileChooser();
         // Dialog zum Oeffnen von Dateien anzeigen
@@ -76,7 +101,32 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         chooser.setMultiSelectionEnabled(false);
         File selectedFile = chooser.getSelectedFile();*/
 
-        DataModel.getInstance().setGraphVizEngine(selectedFile);
+            DataModel.getInstance().setGraphVizEngine(selectedFile);
+        }
+    }
+
+    private String getPluginLocation(){
+        return AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    }
+
+    private String getParent(String resourcePath) {
+        int index = resourcePath.lastIndexOf('/');
+        if (index > 0) {
+            return resourcePath.substring(0, index);
+        }
+        return "/";
+    }
+
+    private void copyFileToProtegeDirectory(File source){
+        try {
+            String path = AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            File dest = new File(this.getParent(this.getParent(decodedPath)) + "/aowln-image-engine.jar");
+
+            FileUtils.copyFile(source, dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initCanvasArea() {
