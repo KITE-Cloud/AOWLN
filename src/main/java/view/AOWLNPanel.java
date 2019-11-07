@@ -213,7 +213,8 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                     } catch (Exception ex) {
                         loadingAnimation.setVisible(false);
                         JOptionPane.showMessageDialog(null,
-                                "An Error has been encountered",
+                                "Your rule structure does not comply to the required AOWLN convention.\n" +
+                                        "See http://bit.ly/AOWLN-Paper for more information.",
                                 "Processing Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
