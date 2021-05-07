@@ -1,4 +1,6 @@
 # AOWLN Visualiser
+![version](https://img.shields.io/badge/version-0.0.2-blue) ![license](https://img.shields.io/badge/license-GPLv3-purple) ![status](https://img.shields.io/badge/activity%20status-paused-lightgrey)
+
 AOWLN Visualiser is a prototypical software to visualise Semantic Web Rule Language (SWRL) using our proposed graphical notation AOWLN (Aided OWL Notation). The visualiser is written in Java and has been implemented as a plugin for the open source ontology editor Protégé. AOWLN Visualiser uses [Graphviz](https://www.graphviz.org/) to create and display graphs. 
 
 ![image](https://user-images.githubusercontent.com/20316120/117473296-163dd300-af5a-11eb-97e7-883ecff1ad8e.png)
