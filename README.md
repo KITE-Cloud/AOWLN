@@ -32,4 +32,4 @@ When using the AOWLN Tab in Protégé you will be requested to enter a local pat
 The plugin is now ready and can be used to visualize SWRL rules in the ontology. A dropdown menu located at the top of the plugin provides a list of all available rules in the ontology. Press the `Select` button to start the visualisation process. The plugin only visualises SWRL rules that comply to the rule convention presented in [AOWLN](http://bit.ly/AOWLN-Paper). 
 
 ## Licensing
-AGADE Traffic is an open source product licensed under GPLv3
+AOWLN Visualiser is an open source product licensed under GPLv3
