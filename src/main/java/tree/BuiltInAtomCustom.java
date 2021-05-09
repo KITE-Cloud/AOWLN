@@ -1,11 +1,15 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Thomas Farrenkopf on 31.05.2017.
  */
 public class BuiltInAtomCustom extends CustomSWRLAtom {
 
     String[] arguments;
+    List<String> literals;
 
     boolean isBound;
 
@@ -22,6 +26,7 @@ public class BuiltInAtomCustom extends CustomSWRLAtom {
         super(key, label);
         this.isBound = isBound;
         this.arguments = argumentsFromTheSecond;
+        this.literals = new ArrayList<>();
     }
 
     public String[] getArguments() {
@@ -30,5 +35,13 @@ public class BuiltInAtomCustom extends CustomSWRLAtom {
 
     public boolean isBound() {
         return isBound;
+    }
+
+    public List<String> getLiterals() {
+        return literals;
+    }
+
+    public void setLiterals(List<String> literals) {
+        this.literals = literals;
     }
 }
