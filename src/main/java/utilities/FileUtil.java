@@ -26,7 +26,7 @@ public class FileUtil {
 
     public static String runJarUsingCMD(String jarPath, String ... argument ){
         try {
-            String exec_command = "java -jar " + jarPath + " ";
+            String exec_command = "java -jar \"" + jarPath + "\" ";
             for (String arg : argument) {
                 exec_command += arg + " ";
             }

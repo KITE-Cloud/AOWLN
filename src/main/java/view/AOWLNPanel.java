@@ -22,11 +22,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 
 
 public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver, ChangeListener, ComponentListener, OWLOntologyChangeListener {
@@ -36,75 +38,57 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     private JComboBox<String> ruleBox;
     JPanel rightCanvas;
     JPanel leftCanvas;
-
     JSlider sliderRightPane;
     JSlider sliderLeftPane;
-
     Image rootImgBody = null;
     Image rootImgHead = null;
     private int initialImageZoom = 50;
     private JLabel loadingAnimation;
-
-
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
 
     public AOWLNPanel(ViewController viewController) {
         this.setLayout(new BorderLayout());
-
         this.viewController = viewController;
-
         initRulesBar();
-
         initCanvasArea();
-
         this.addComponentListener(this);
-        
         this.loadGraphVizEngine();
-
     }
 
     private void loadGraphVizEngine() {
-        File image_engine = new File(this.getParent(this.getParent(this.getPluginLocation())), "aowln-image-engine.jar");
-        boolean fileExists = image_engine.exists();
+        String enginePathString = this.getParent(this.getParent(this.getPluginLocation())) + "/aowln-image-engine.jar";
+        enginePathString = enginePathString.replace("%20", " ").substring(1);
+        Path enginePath = Paths.get(enginePathString);
 
-        if(fileExists){
+        // file exists and it is not a directory
+        if (Files.exists(enginePath) && !Files.isDirectory(enginePath)) {
+            System.out.println("ImageEngine File exists!");
+            System.out.println("enginePathString: " + enginePathString);
+            File image_engine = new File(enginePathString);
             DataModel.getInstance().setGraphVizEngine(image_engine);
-        }else {
-
+        } else {
             StartUpEngine startUpEngine = new StartUpEngine();
-
             JFrame frame = (JFrame) this.getTopLevelAncestor();
-
             startUpEngine.displayFileChooserDialog(frame);
-
             File selectedFile = startUpEngine.getSelectedFile();
+            System.out.println("selected file: " + selectedFile.getPath());
 
             try {
                 String path = getPluginLocation();
-
                 String decodedPath = URLDecoder.decode(path, "UTF-8");
                 System.out.println("Decoded Path of AOWLNPanel = " + decodedPath);
                 System.out.println("Decoded Path 2 of AOWLNPanel = " + this.getParent(this.getParent(decodedPath)));
-
                 copyFileToProtegeDirectory(selectedFile);
-
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
-        /*JFileChooser chooser = new JFileChooser();
-        // Dialog zum Oeffnen von Dateien anzeigen
-        chooser.showOpenDialog(this);
-
-        chooser.setMultiSelectionEnabled(false);
-        File selectedFile = chooser.getSelectedFile();*/
 
             DataModel.getInstance().setGraphVizEngine(selectedFile);
         }
     }
 
-    private String getPluginLocation(){
+    private String getPluginLocation() {
         return AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     }
 
@@ -116,7 +100,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         return "/";
     }
 
-    private void copyFileToProtegeDirectory(File source){
+    private void copyFileToProtegeDirectory(File source) {
         try {
             String path = AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
             String decodedPath = URLDecoder.decode(path, "UTF-8");
@@ -130,7 +114,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
 
     private void initCanvasArea() {
 
-        JPanel upperRightPane =  new JPanel(new BorderLayout()),
+        JPanel upperRightPane = new JPanel(new BorderLayout()),
                 lowerRightPane = new JPanel(new FlowLayout()),
                 completeRightPane = new JPanel(new BorderLayout()),
                 upperLeftPane = new JPanel(new BorderLayout()),
@@ -146,7 +130,6 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         leftCanvas.setBackground(Color.white);
 
 
-
         JScrollPane rightScrollPane = new JScrollPane(upperRightPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED),
                 leftScrollPane = new JScrollPane(upperLeftPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
@@ -156,8 +139,8 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         upperRightPane.add(rightCanvas, BorderLayout.CENTER);
         upperLeftPane.add(leftCanvas, BorderLayout.CENTER);
 
-       // lowerRightPane.add(btn_rightCenter);
-        sliderRightPane = new JSlider(JSlider.HORIZONTAL,0, 100, initialImageZoom);
+        // lowerRightPane.add(btn_rightCenter);
+        sliderRightPane = new JSlider(JSlider.HORIZONTAL, 0, 100, initialImageZoom);
         sliderRightPane.setSnapToTicks(false);
         sliderRightPane.addChangeListener(this);
 
@@ -169,8 +152,8 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         lowerRightPane.add(new JLabel("Zoom in %:"));
         lowerRightPane.add(sliderRightPane);
 
-      //   lowerleftPane.add(btn_leftCenter);
-        sliderLeftPane = new JSlider(JSlider.HORIZONTAL,0, 100, initialImageZoom);
+        //   lowerleftPane.add(btn_leftCenter);
+        sliderLeftPane = new JSlider(JSlider.HORIZONTAL, 0, 100, initialImageZoom);
         sliderLeftPane.setSnapToTicks(false);
 
         sliderLeftPane.addChangeListener(this);
@@ -192,7 +175,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         completeleftPane.add(lowerleftPane, BorderLayout.SOUTH);
         completeleftPane.setBackground(Color.white);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true,completeleftPane, completeRightPane);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, completeleftPane, completeRightPane);
         splitPane.setResizeWeight(0.6);
 
         this.add(splitPane, BorderLayout.CENTER);
@@ -201,12 +184,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     private void initRulesBar() {
 
         JPanel rulesBar = new JPanel(new FlowLayout());
-
-
         ruleBox = new JComboBox<String>();
-
-
-
         ruleBox.setPreferredSize(new Dimension(800, (int) ruleBox.getPreferredSize().getHeight()));
         ruleBox.addActionListener(this);
 
@@ -244,11 +222,10 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     }
 
 
-
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getActionCommand() == "Select"){
-            if(ruleBox.getItemCount() > 0) {
+        if (e.getActionCommand() == "Select") {
+            if (ruleBox.getItemCount() > 0) {
                 String selectedRule = (String) ruleBox.getSelectedItem();
                 String ruleName = selectedRule.substring(0, selectedRule.indexOf(":"));
 
@@ -267,18 +244,14 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                                 "Processing Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
-
                 });
-
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null,
                         "No rules found.",
                         "Warning",
                         JOptionPane.WARNING_MESSAGE);
             }
-
         }
-
     }
 
     @Override
@@ -296,7 +269,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     }
 
     private void updateCanvasArea(String type, int scalePercentage) {
-        if(rootImgBody != null || rootImgHead != null) {
+        if (rootImgBody != null || rootImgHead != null) {
 
             Image img = null;
             if (type.equals("Body"))
@@ -320,32 +293,32 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     }
 
 
-    private Image scaleImage(Image img, int percentage){
-        double normedPercentage = (double)percentage / 100d;
-        Image toolkitImage = img.getScaledInstance((int)(img.getWidth(null)*normedPercentage), (int)(img.getHeight(null)*normedPercentage),
+    private Image scaleImage(Image img, int percentage) {
+        double normedPercentage = (double) percentage / 100d;
+        Image toolkitImage = img.getScaledInstance((int) (img.getWidth(null) * normedPercentage), (int) (img.getHeight(null) * normedPercentage),
                 Image.SCALE_SMOOTH);
-        
         return toolkitImage;
     }
 
     int lastSliderValue = initialImageZoom;
+
     public void stateChanged(ChangeEvent e) {
 
-        if(e.getSource() instanceof JSlider){
-            JSlider source = (JSlider)e.getSource();
+        if (e.getSource() instanceof JSlider) {
+            JSlider source = (JSlider) e.getSource();
 
             int value = source.getValue();
             int mod = value % 5;
 
-            if(mod > 3 ){
+            if (mod > 3) {
                 value = value - mod + 5;
-            }else{
+            } else {
                 value = value - mod;
             }
 
             source.setValue(value);
 
-            if(value != lastSliderValue) {
+            if (value != lastSliderValue) {
                 lastSliderValue = value;
                 if (source == sliderLeftPane) {
                     updateCanvasArea("Body", source.getValue());
@@ -354,34 +327,31 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                     updateCanvasArea("Head", source.getValue());
                 }
             }
-
         }
     }
 
 
     @Override
     public void componentResized(ComponentEvent e) {
-        ruleBox.setPreferredSize(new Dimension(this.getWidth()-250, (int) ruleBox.getPreferredSize().getHeight()));
+        ruleBox.setPreferredSize(new Dimension(this.getWidth() - 250, (int) ruleBox.getPreferredSize().getHeight()));
         this.repaint();
         this.revalidate();
     }
 
     @Override
     public void componentMoved(ComponentEvent e) {
-
     }
 
     @Override
     public void componentShown(ComponentEvent e) {
-
     }
 
     @Override
     public void componentHidden(ComponentEvent e) {
-
     }
 
     ExecutorService executorService = Executors.newFixedThreadPool(1);
+
     @Override
     public void ontologiesChanged(@Nonnull List<? extends OWLOntologyChange> changes) throws OWLException {
 
