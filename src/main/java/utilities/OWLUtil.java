@@ -1,4 +1,4 @@
-package services;
+package utilities;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;

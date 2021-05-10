@@ -6,9 +6,9 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.swrlapi.core.SWRLAPIRule;
 import org.swrlapi.core.SWRLRuleRenderer;
-import services.AOWLNEngine;
-import services.GraphVizGenerator;
-import services.OWLUtil;
+import utilities.AOWLNEngine;
+import utilities.GraphVizGenerator;
+import utilities.OWLUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;

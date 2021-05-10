@@ -1,4 +1,4 @@
-package services;
+package utilities;
 
 import com.google.gson.Gson;
 import model.observer.DataModel;

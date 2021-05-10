@@ -1,4 +1,4 @@
-package services;
+package model;
 
 import model.CustomSWRLProperty;
 
@@ -6,8 +6,6 @@ import model.CustomSWRLProperty;
  * Created by Thomas Farrenkopf on 31.05.2017.
  */
 public class ObjectPropertyAtomCustom extends CustomSWRLProperty {
-
-
 
     public ObjectPropertyAtomCustom(String key) {
         super(key);
