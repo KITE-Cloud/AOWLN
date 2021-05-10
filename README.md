@@ -27,7 +27,7 @@ Furthermore, the plugin requires an external jar file `aowln-image-engine.jar` w
 ### 2. Using the plugin
 To open the installed plugin in Protége navigate to: `Window -> Tabs -> AOWLN-Tab`
 
-When using the AOWLN Tab in Protégé you will be requested to enter a local path to the external jar `aowln-image-engine.jar` that has been previously downloaded in step 1. To continue you must provide a valid path to the jar. Use the File-Explorer to select the jar file and click on the `Continue` button. 
+When using the AOWLN Tab in Protégé for the first time you will be requested to enter a local path to the external jar `aowln-image-engine.jar` that has been previously downloaded in step 1. To continue you must provide a valid path to the jar. Use the File-Explorer to select the jar file and click on the `Continue` button. 
 
 The plugin is now ready and can be used to visualize SWRL rules in the ontology. A dropdown menu located at the top of the plugin provides a list of all available rules in the ontology. Press the `Select` button to start the visualisation process. The plugin only visualises SWRL rules that comply to the rule convention presented in [AOWLN](http://bit.ly/AOWLN-Paper). 
 
