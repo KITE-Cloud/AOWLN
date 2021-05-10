@@ -33,7 +33,6 @@ import java.util.concurrent.Executors;
 
 public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver, ChangeListener, ComponentListener, OWLOntologyChangeListener {
 
-
     private final ViewController viewController;
     private JComboBox<String> ruleBox;
     JPanel rightCanvas;
@@ -42,7 +41,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     JSlider sliderLeftPane;
     Image rootImgBody = null;
     Image rootImgHead = null;
-    private int initialImageZoom = 50;
+    private int initialImageZoom = 25;
     private JLabel loadingAnimation;
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
