@@ -1,20 +1,15 @@
-package model;
-
-import interfaces.ModelObserver;
+package model.observer;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-
 public class DataModel {
 
-    // Eine (versteckte) Klassenvariable vom Typ der eigenen Klasse
     private static DataModel instance;
-    // Verhindere die Erzeugung des Objektes über andere Methoden
+
     private DataModel () {}
-    // Eine Zugriffsmethode auf Klassenebene, welches dir '''einmal''' ein konkretes
-    // Objekt erzeugt und dieses zurückliefert.
+
     public static DataModel getInstance () {
         if (DataModel.instance == null) {
             DataModel.instance = new DataModel ();
@@ -51,7 +46,6 @@ public class DataModel {
 
     public void setSWRLRulesAsString(ArrayList<String> SWRLRulesAsString) {
         this.SWRLRulesAsString = SWRLRulesAsString;
-
         for (ModelObserver modelObserver : observerList) {
             modelObserver.ruleListHasChanged(SWRLRulesAsString);
         }

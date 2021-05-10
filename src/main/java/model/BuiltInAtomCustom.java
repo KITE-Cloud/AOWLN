@@ -1,4 +1,4 @@
-package tree;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +10,14 @@ public class BuiltInAtomCustom extends CustomSWRLAtom {
 
     String[] arguments;
     List<String> literals;
-
     boolean isBound;
 
     public BuiltInAtomCustom(String key) {
         super(key);
     }
-
     public BuiltInAtomCustom(String key, String label) {
         super(key, label);
     }
-
 
     public BuiltInAtomCustom(String key, String label, boolean isBound, String[] argumentsFromTheSecond) {
         super(key, label);

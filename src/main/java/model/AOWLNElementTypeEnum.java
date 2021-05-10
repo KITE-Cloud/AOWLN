@@ -1,4 +1,4 @@
-package tree;
+package model;
 
 /**
  * Created by Thomas Farrenkopf on 14.08.2017.

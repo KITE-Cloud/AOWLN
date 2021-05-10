@@ -3,9 +3,9 @@ package services;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import model.*;
 import org.semanticweb.owlapi.model.*;
 import org.swrlapi.builtins.arguments.SWRLVariableBuiltInArgument;
-import tree.*;
 
 import java.rmi.server.UID;
 import java.util.*;
@@ -15,12 +15,7 @@ import java.util.*;
  */
 public class AOWLNEngine {
 
-
-
-
-
     public String stringSplit(String s) {
-
         String[] parts = s.split("#");
         String part2 = parts[parts.length - 1];
         parts = part2.split(">");
@@ -30,7 +25,6 @@ public class AOWLNEngine {
         finalString = finalString.replaceAll("[^a-zA-Z0-9]", "");
         return finalString;
     }
-
 
     public ArrayList<CustomSWRLAtom> createSWRLAtomsForTree(HashSet<SWRLAtom> ruleSegment) {
         HashSet<CustomSWRLAtom> classAtoms = new HashSet<>();
@@ -45,8 +39,6 @@ public class AOWLNEngine {
                 String label = stringSplit(element.getPredicate().toString());
                 String key = stringSplit(((SWRLClassAtom) element).getArgument().toString());
                 ClassAtomCustom classAtom = new ClassAtomCustom(key, label);
-                //System.out.println("classAtom Key: " + classAtom.getKey());
-                //System.out.println("classAtom Label: " + classAtom.getLabel());
                 classAtoms.add(classAtom);
 
             } else if (element instanceof SWRLDataPropertyAtom) {
@@ -55,10 +47,6 @@ public class AOWLNEngine {
                 String firstArgument = stringSplit(((SWRLDataPropertyAtom) element).getFirstArgument().toString());
                 DataPropertyAtomCustom dataPropAtom = new DataPropertyAtomCustom(firstArgument, key, label);
                 dataPropertyAtoms.add(dataPropAtom);
-
-                //System.out.println("DataPropLabel: " + dataPropAtom.getLabel());
-                //System.out.println("DataPropFristArgument: " + dataPropAtom.getFirstArgument());
-                //System.out.println("DataPropKey: " + dataPropAtom.getKey());
             } else if (element instanceof SWRLBuiltInAtom) {
                 //bodyBuiltInAtoms.add(element);
                 //   String label = stringSplit(element.getPredicate().toString())+stringSplit(((SWRLBuiltInAtom) element).getArguments().toArray()[1].toString());
@@ -83,8 +71,7 @@ public class AOWLNEngine {
                         }
 
                         arguments.add(swrlVariableBuiltInArgument.getVariableName());
-                    }
-                    else {
+                    } else {
                         String s = ((SWRLDArgument) swrlArgumentList.get(i)).toString();
                         literals.add(s);
                     }
@@ -100,28 +87,21 @@ public class AOWLNEngine {
                 String firstArgument = stringSplit(((SWRLObjectPropertyAtom) element).getFirstArgument().toString());
                 ObjectPropertyAtomCustom objectPropAtom = new ObjectPropertyAtomCustom(firstArgument, key, label);
                 objectPropertyAtoms.add(objectPropAtom);
-                //System.out.println("ObjectPropLabel: " + objectPropAtom.getLabel());
-                //System.out.println("ObjectPropFirstArgument: " + objectPropAtom.getFirstArgument());
-                //System.out.println("ObjectPropKey: " + objectPropAtom.getKey());
             }
         }
 
         for (CustomSWRLAtom atom : classAtoms) {
             swrlAtomsForTree.add(atom);
         }
-
         for (CustomSWRLAtom atom : dataPropertyAtoms) {
             swrlAtomsForTree.add(atom);
         }
-
         for (CustomSWRLAtom atom : objectPropertyAtoms) {
             swrlAtomsForTree.add(atom);
         }
-
         for (CustomSWRLAtom atom : builtInAtoms) {
             swrlAtomsForTree.add(atom);
         }
-
         return swrlAtomsForTree;
     }
 
@@ -135,7 +115,6 @@ public class AOWLNEngine {
         int beginBuiltInInRuleFragmentList = -1;
         List<CustomSWRLAtom> done = new ArrayList<>();
         Multimap<BuiltInAtomCustom, BuiltInAtomCustom> builtInCollectionsMMap = HashMultimap.create();
-
 
         String key = null;
         String label = null;
@@ -217,71 +196,53 @@ public class AOWLNEngine {
                     removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), aowlnElements.get(builtInAtomCustom.getArguments()[0]), aowlnEdges);
                 }
 
-
                 if (!isBuiltInCollection && !done.contains(swrlAtom)) {
                     if (builtInAtomCustom.isBound()) {
                         AOWLNElement variableElement = aowlnElements.get(builtInAtomCustom.getArguments()[0]);
                         removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), variableElement, aowlnEdges);
-                        //String edgeLabel = builtInAtomCustom.getLabel();
-                        String edgeLabel = builtInAtomCustom.getLabel()+"(";
-                        //add builtin arguments to label
-                        for(int index =0; index< builtInAtomCustom.getArguments().length; index++){
-                            String arg = builtInAtomCustom.getArguments()[index];
-                            if(index == builtInAtomCustom.getArguments().length-1){
-                                edgeLabel = edgeLabel+ arg;
-                            }else {
-                                edgeLabel = edgeLabel+ arg+",";
-                            }
-                        }
-                        for(int index =0; index< builtInAtomCustom.getLiterals().size(); index++){
-                            String arg = builtInAtomCustom.getLiterals().get(index);
-                            if(index == builtInAtomCustom.getLiterals().size()-1){
-                                edgeLabel = edgeLabel+"," +arg;
-                            }else {
-                                edgeLabel = edgeLabel+ "," +arg+",";
-                            }
-                        }
-                        edgeLabel= edgeLabel+")";
+                        String edgeLabel = "";
 
-                        newEdgeElement = new AOWLNEdgeElement(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), variableElement, EdgeTypeEnum.BuiltIn, edgeLabel);
-                        aowlnEdges.put(new UID().toString(), newEdgeElement);
-                      //  removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), newElement, aowlnEdges);
-                    } else {
-                        newElement = new AOWLNElement(AOWLNElementTypeEnum.Variable, builtInAtomCustom.getArguments()[0], builtInAtomCustom.getArguments()[0]);
-                        aowlnElements.put(builtInAtomCustom.getArguments()[0], newElement);
-                        for (int k = 1; k < builtInAtomCustom.getArguments().length; k++) {
-                            String edgeLabel = "";
-                            edgeLabel= builtInAtomCustom.getLabel()+"(";
-
+                        if (builtInAtomCustom.getLiterals().size() > 0) {
+                            edgeLabel = builtInAtomCustom.getLabel() + "(";
                             //add builtin arguments to label
-                            for(int index =0; index< builtInAtomCustom.getArguments().length; index++){
+                            /*for(int index =0; index< builtInAtomCustom.getArguments().length; index++){
                                 String arg = builtInAtomCustom.getArguments()[index];
                                 if(index == builtInAtomCustom.getArguments().length-1){
                                     edgeLabel = edgeLabel+ arg;
                                 }else {
                                     edgeLabel = edgeLabel+ arg+",";
                                 }
-                            }
-                            for(int index =0; index< builtInAtomCustom.getLiterals().size(); index++){
+                            }*/
+                            for (int index = 0; index < builtInAtomCustom.getLiterals().size(); index++) {
                                 String arg = builtInAtomCustom.getLiterals().get(index);
-                                if(index == builtInAtomCustom.getLiterals().size()-1){
-                                    edgeLabel = edgeLabel+"," +arg;
-                                }else {
-                                    edgeLabel = edgeLabel+ "," +arg+",";
+                                if (index == builtInAtomCustom.getLiterals().size() - 1) {
+                                    edgeLabel = edgeLabel + arg;
+                                } else {
+                                    edgeLabel = edgeLabel + arg + ",";
                                 }
                             }
-                            edgeLabel= edgeLabel+")";
+                            edgeLabel = edgeLabel + ")";
+                        } else {
+                            edgeLabel = builtInAtomCustom.getLabel();
+                        }
+
+                        newEdgeElement = new AOWLNEdgeElement(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), variableElement, EdgeTypeEnum.BuiltIn, edgeLabel);
+                        aowlnEdges.put(new UID().toString(), newEdgeElement);
+                        //  removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), newElement, aowlnEdges);
+                    } else {
+                        newElement = new AOWLNElement(AOWLNElementTypeEnum.Variable, builtInAtomCustom.getArguments()[0], builtInAtomCustom.getArguments()[0]);
+                        aowlnElements.put(builtInAtomCustom.getArguments()[0], newElement);
+                        for (int k = 1; k < builtInAtomCustom.getArguments().length; k++) {
+                            String edgeLabel = "";
+                            edgeLabel = builtInAtomCustom.getLabel();
 
                             newEdgeElement = new AOWLNEdgeElement(aowlnElements.get(builtInAtomCustom.getArguments()[k]), newElement, EdgeTypeEnum.BuiltIn, edgeLabel);
                             aowlnEdges.put(new UID().toString(), newEdgeElement);
-                       }
-
+                        }
                     }
                 }
-
             }
         }
-
 
         return createGraphListsForViz(aowlnElements, aowlnEdges);
 
@@ -289,11 +250,11 @@ public class AOWLNEngine {
 
     private boolean removeRedundantEdge(AOWLNElement from, AOWLNElement to, HashMap<String, AOWLNEdgeElement> aowlnEdges) {
 
-        for(Map.Entry<String, AOWLNEdgeElement> entry : aowlnEdges.entrySet()){
+        for (Map.Entry<String, AOWLNEdgeElement> entry : aowlnEdges.entrySet()) {
             String key = entry.getKey();
             AOWLNElement fromElement = entry.getValue().getFrom();
             AOWLNElement toElement = entry.getValue().getTo();
-            if(fromElement!=null && toElement != null && from.equals(fromElement) && to.equals(toElement)){
+            if (fromElement != null && toElement != null && from.equals(fromElement) && to.equals(toElement)) {
                 aowlnEdges.remove(key);
                 return true;
             }
@@ -312,7 +273,6 @@ public class AOWLNEngine {
             String caption = element.getLabel();
             String info = element.getIdentifier();
             String type = element.getElementType().toString();
-
             nodes[i] = new NodeInfo(caption, info, type);
         }
 
@@ -324,13 +284,9 @@ public class AOWLNEngine {
             EdgeTypeEnum edgeTypeEnum = element.getEdgeType();
             String label = element.getLabel();
             connections[i] = new NodeConnection(nodeInfoParent, nodeInfoChild, edgeTypeEnum, label);
-
-
         }
 
-
         return new GraphListsForViz(nodes, connections);
-
     }
 
     public NodeInfo getNodeInfo(NodeInfo[] nodes, String identifier) {

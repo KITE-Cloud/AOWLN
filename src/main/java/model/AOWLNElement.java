@@ -1,4 +1,4 @@
-package tree;
+package model;
 
 /**
  * Created by Thomas Farrenkopf on 15.05.2017.
@@ -32,7 +32,6 @@ public class AOWLNElement{
         if (o == null || getClass() != o.getClass()) return false;
 
         AOWLNElement element = (AOWLNElement) o;
-
         if (elementType != element.elementType) return false;
         if (identifier != null ? !identifier.equals(element.identifier) : element.identifier != null) return false;
         return label != null ? label.equals(element.label) : element.label == null;

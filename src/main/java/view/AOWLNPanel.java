@@ -1,13 +1,12 @@
 package view;
 
-import controller.MainController;
-import interfaces.ModelObserver;
-import model.DataModel;
+import controller.ViewController;
+import model.observer.ModelObserver;
+import model.observer.DataModel;
 import org.apache.commons.io.FileUtils;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
-import services.StartUpEngine;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -33,7 +32,7 @@ import java.util.concurrent.Executors;
 public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver, ChangeListener, ComponentListener, OWLOntologyChangeListener {
 
 
-    private final MainController mainController;
+    private final ViewController viewController;
     private JComboBox<String> ruleBox;
     JPanel rightCanvas;
     JPanel leftCanvas;
@@ -50,10 +49,10 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
 
-    public AOWLNPanel(MainController mainController) {
+    public AOWLNPanel(ViewController viewController) {
         this.setLayout(new BorderLayout());
 
-        this.mainController = mainController;
+        this.viewController = viewController;
 
         initRulesBar();
 
@@ -256,7 +255,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                 executor.submit(() -> {
                     try {
                         loadingAnimation.setVisible(true);
-                        mainController.produceRuleImages(ruleName);
+                        viewController.loadRuleImages(ruleName);
                         this.sliderRightPane.setValue(initialImageZoom);
                         this.sliderLeftPane.setValue(initialImageZoom);
                         loadingAnimation.setVisible(false);
@@ -294,7 +293,6 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         rootImgHead.flush();
         updateCanvasArea("Body", initialImageZoom);
         updateCanvasArea("Head", initialImageZoom);
-
     }
 
     private void updateCanvasArea(String type, int scalePercentage) {
@@ -324,7 +322,6 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
 
     private Image scaleImage(Image img, int percentage){
         double normedPercentage = (double)percentage / 100d;
-
         Image toolkitImage = img.getScaledInstance((int)(img.getWidth(null)*normedPercentage), (int)(img.getHeight(null)*normedPercentage),
                 Image.SCALE_SMOOTH);
         
@@ -353,7 +350,6 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                 if (source == sliderLeftPane) {
                     updateCanvasArea("Body", source.getValue());
                 }
-
                 if (source == sliderRightPane) {
                     updateCanvasArea("Head", source.getValue());
                 }
@@ -395,7 +391,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainController.getInstance().loadRulesfromOntology();
+                ViewController.getInstance().loadRulesfromOntology();
             }
         });
     }

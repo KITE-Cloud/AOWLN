@@ -1,6 +1,6 @@
 package services;
 
-import tree.CustomSWRLProperty;
+import model.CustomSWRLProperty;
 
 /**
  * Created by Thomas Farrenkopf on 31.05.2017.

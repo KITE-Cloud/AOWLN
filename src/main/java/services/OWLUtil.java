@@ -15,15 +15,12 @@ import java.util.Set;
 
 public class OWLUtil {
 
-
     private OWLOntologyManager manager;
     private OWLOntology ontology;
     private DefaultPrefixManager prefixManager;
     private Set<SWRLAPIRule> allRules;
 
-
     public void loadOntology(String filepath) {
-
         manager = OWLManager.createOWLOntologyManager();
         try {
             ontology = manager.loadOntologyFromOntologyDocument(FileUtil.getInputStream(filepath));
@@ -31,55 +28,39 @@ public class OWLUtil {
             e.printStackTrace();
         }
 
-        prefixManager = new DefaultPrefixManager(null,null,ontology.getOntologyID().getOntologyIRI().get().toString() + "#");
-
-
+        prefixManager = new DefaultPrefixManager(null, null, ontology.getOntologyID().getOntologyIRI().get().toString() + "#");
         allRules = getSWRLRuleEngine().getSWRLRules();
-
-
     }
 
     public void setOntology(OWLOntology ontology) {
-
         manager = OWLManager.createOWLOntologyManager();
-
         this.ontology = ontology;
-
-        prefixManager = new DefaultPrefixManager(null,null,ontology.getOntologyID().getOntologyIRI().get().toString() + "#");
-
+        prefixManager = new DefaultPrefixManager(null, null, ontology.getOntologyID().getOntologyIRI().get().toString() + "#");
         allRules = getSWRLRuleEngine().getSWRLRules();
 
     }
 
-    public SWRLRuleEngine getSWRLRuleEngine (){
+    public SWRLRuleEngine getSWRLRuleEngine() {
         IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager.getDefaultPrefix());
         SWRLRuleEngine ruleEngine = SWRLAPIFactory.createSWRLRuleEngine(ontology, iriResolver);
-
         return ruleEngine;
     }
 
-    public SWRLRuleRenderer getRuleRenderer(){
-
+    public SWRLRuleRenderer getRuleRenderer() {
         IRIResolver iriResolver = SWRLAPIFactory.createIRIResolver(prefixManager.getDefaultPrefix());
         SWRLRuleRenderer swrlRuleRenderer = SWRLAPIInternalFactory.createSWRLRuleRenderer(ontology, iriResolver);
-
         return swrlRuleRenderer;
-
     }
-
 
     public ArrayList<SWRLAPIRule> getAllRules() {
         return new ArrayList<SWRLAPIRule>(allRules);
     }
 
-    public SWRLAPIRule getSWRLRule(String ruleName){
-
+    public SWRLAPIRule getSWRLRule(String ruleName) {
         ArrayList<SWRLAPIRule> allRules = getAllRules();
-
         for (SWRLAPIRule rule : allRules) {
-            if(rule.getRuleName().equals(ruleName))return rule;
+            if (rule.getRuleName().equals(ruleName)) return rule;
         }
-
         return null;
     }
 

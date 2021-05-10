@@ -1,7 +1,7 @@
 package view;
 
 
-import controller.MainController;
+import controller.ViewController;
 import org.protege.editor.owl.ui.view.AbstractOWLViewComponent;
 
 /**
@@ -12,7 +12,7 @@ public class AOWLNProtegeView extends AbstractOWLViewComponent {
    // private static final Logger log = LoggerFactory.getLogger(AOWLNProtegeView.class);
 
     protected void initialiseOWLView() throws Exception {
-        MainController.getInstance().start(this);
+        ViewController.getInstance().start(this);
     }
 
     protected void disposeOWLView() {
