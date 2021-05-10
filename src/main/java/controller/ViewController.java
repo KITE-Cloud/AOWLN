@@ -33,7 +33,10 @@ public class ViewController {
         protegeView.add(aowlnPanel, BorderLayout.CENTER);
         dataModel = DataModel.getInstance();
         dataModel.registerObserver(aowlnPanel);
-        loadRulesfromOntology();
+
+        new Thread((Runnable) () -> {
+            loadRulesfromOntology();
+        }).start();
 
         new Thread((Runnable) () -> {
             protegeView.getOWLModelManager().getActiveOntology().getOWLOntologyManager().addOntologyChangeListener(aowlnPanel);
