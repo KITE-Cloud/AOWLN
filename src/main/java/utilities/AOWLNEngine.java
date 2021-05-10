@@ -22,7 +22,9 @@ public class AOWLNEngine {
         part2 = parts[0];
         parts = part2.split("xsd");
         String finalString = parts[0];
-        finalString = finalString.replaceAll("[^a-zA-Z0-9]", "");
+        //finalString = finalString.replaceAll("[^a-zA-Z0-9]", "");
+        finalString = finalString.replace("^", "");
+        finalString = finalString.replace("\"", "");
         return finalString;
     }
 
@@ -57,9 +59,7 @@ public class AOWLNEngine {
 
                 List<String> arguments = new ArrayList<>();
                 List<String> literals = new ArrayList<>();
-
                 List<SWRLArgument> swrlArgumentList = new ArrayList<>(element.getAllArguments());
-
 
                 for (int i = 0; i < swrlArgumentList.size(); i++) {
 
