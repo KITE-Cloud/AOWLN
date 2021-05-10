@@ -19,16 +19,24 @@ public class GraphVizGenerator {
         Gson gson = new Gson();
         String graphListAsJson = gson.toJson(graphList);
         String encodedString = Base64.getEncoder().encodeToString(graphListAsJson.getBytes());
-
         File aowln_image_engine = DataModel.getInstance().getGraphVizEngine(); // forward slashes with java.io.File works
         String absolutePath = aowln_image_engine.getAbsolutePath();
-        FileUtil.runJarUsingCMD(absolutePath, encodedString, rulePart.toUpperCase());
+        String tmpFileName = System.getProperty("java.io.tmpdir") + "AOWLNRule_" + rulePart.toUpperCase() + ".txt";
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tmpFileName));
+            writer.write(encodedString);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //FileUtil.runJarUsingCMD(absolutePath, encodedString, rulePart.toUpperCase());
+        FileUtil.runJarUsingCMD(absolutePath, tmpFileName, rulePart.toUpperCase());
         File file = new File(System.getProperty("java.io.tmpdir") + "AOWLN-" + rulePart.toUpperCase() + ".png");
         BufferedImage image = null;
 
-        for(int i = 0; i< 20; i++){
+        for (int i = 0; i < 20; i++) {
             try {
-                if(file.exists()){
+                if (file.exists()) {
                     image = ImageIO.read(file);
                     file.delete();
                     break;
