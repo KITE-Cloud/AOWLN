@@ -70,20 +70,6 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
             StartUpEngine startUpEngine = new StartUpEngine();
             JFrame frame = (JFrame) this.getTopLevelAncestor();
             startUpEngine.displayFileChooserDialog(frame);
-            File selectedFile = startUpEngine.getSelectedFile();
-            System.out.println("selected file: " + selectedFile.getPath());
-
-            try {
-                String path = getPluginLocation();
-                String decodedPath = URLDecoder.decode(path, "UTF-8");
-                System.out.println("Decoded Path of AOWLNPanel = " + decodedPath);
-                System.out.println("Decoded Path 2 of AOWLNPanel = " + this.getParent(this.getParent(decodedPath)));
-                copyFileToProtegeDirectory(selectedFile);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-            DataModel.getInstance().setGraphVizEngine(selectedFile);
         }
     }
 
@@ -99,17 +85,7 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         return "/";
     }
 
-    private void copyFileToProtegeDirectory(File source) {
-        try {
-            String path = AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            String decodedPath = URLDecoder.decode(path, "UTF-8");
-            File dest = new File(this.getParent(this.getParent(decodedPath)) + "/aowln-image-engine.jar");
 
-            FileUtils.copyFile(source, dest);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void initCanvasArea() {
 
@@ -238,9 +214,10 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                     } catch (Exception ex) {
                         loadingAnimation.setVisible(false);
                         JOptionPane.showMessageDialog(null,
-                                "Your rule structure does not comply to the required AOWLN convention.\n" +
-                                        "See http://bit.ly/AOWLN-Paper for more information.",
-                                "Processing Error",
+                                "Please check whether aowln-image-engine.jar is located in your protégé folder \n" +
+                                        "or check whether your rule structure complies to the required AOWLN convention.\n" +
+                                        "For more information see http://bit.ly/AOWLN-Paper.",
+                                "An error occured.",
                                 JOptionPane.ERROR_MESSAGE);
                     }
                 });

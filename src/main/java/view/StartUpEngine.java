@@ -1,11 +1,16 @@
 package view;
 
+import model.observer.DataModel;
+import org.apache.commons.io.FileUtils;
 import utilities.FileUtil;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -30,8 +35,8 @@ public class StartUpEngine implements ActionListener {
         aContinue.setEnabled(false);
         aContinue.addActionListener(this);
         fileChooserDialog.add(aContinue, BorderLayout.SOUTH);
-        fileChooserDialog.setModal(true);
-        fileChooserDialog.setUndecorated(true);
+        fileChooserDialog.setModal(false);
+        fileChooserDialog.setUndecorated(false);
         fileChooserDialog.pack();
         fileChooserDialog.setLocationRelativeTo(null);
         fileChooserDialog.setVisible(true);
@@ -87,8 +92,42 @@ public class StartUpEngine implements ActionListener {
         }
 
         if (e.getActionCommand().equals("CONTINUE")) {
+            File selectedFile = this.getSelectedFile();
+            System.out.println("selected file: " + selectedFile.getPath());
+
+            try {
+                String path = AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath(); //plugin location
+                String decodedPath = URLDecoder.decode(path, "UTF-8");
+                System.out.println("Decoded Path of AOWLNPanel = " + decodedPath);
+                System.out.println("Decoded Path 2 of AOWLNPanel = " + this.getParent(this.getParent(decodedPath)));
+                copyFileToProtegeDirectory(selectedFile);
+            } catch (UnsupportedEncodingException exception) {
+                exception.printStackTrace();
+            }
+
+            DataModel.getInstance().setGraphVizEngine(selectedFile);
             fileChooserDialog.setVisible(false);
         }
+    }
+
+    private void copyFileToProtegeDirectory(File source) {
+        try {
+            String path = AOWLNPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            File dest = new File(this.getParent(this.getParent(decodedPath)) + "/aowln-image-engine.jar");
+
+            FileUtils.copyFile(source, dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getParent(String resourcePath) {
+        int index = resourcePath.lastIndexOf('/');
+        if (index > 0) {
+            return resourcePath.substring(0, index);
+        }
+        return "/";
     }
 
       /*  public static void main(String[] args) {
