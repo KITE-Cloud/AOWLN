@@ -249,7 +249,7 @@ public class AOWLNEngine {
             AOWLNElement currentEl = aowlnElements.get(elKey);
             if (currentEl.getLabel().length() > 10 &&
                     (currentEl.getElementType().equals(AOWLNElementTypeEnum.Property) || currentEl.getElementType().equals(AOWLNElementTypeEnum.Class))) {
-                currentEl.setLabel(currentEl.getLabel().replaceAll("(.)([A-Z])", "$1\n$2"));
+                currentEl.setLabel(currentEl.getLabel().replaceAll("([a-z]{5,})([A-Z])", "$1\n$2"));
             }
         }
 
