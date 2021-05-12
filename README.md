@@ -30,8 +30,11 @@ When using the AOWLN Tab in Protégé for the first time you will be requested t
 
 The plugin is now ready and can be used to visualize SWRL rules in the ontology. A dropdown menu located at the top of the plugin provides a list of all available rules in the ontology. Press the `Select` button to start the visualisation process. The plugin only visualises SWRL rules that comply to the rule convention presented in [AOWLN](http://bit.ly/AOWLN-Paper). Our convention requires each rule fragment (rule head or rule body) to explicitly define concepts of variables used in properties or builtins of that specific rule fragment.
 
-## AOWLN Revised
-We have noticed that the aggregation of multiple builtins into a builtin collection has created a limitation causing a loss of transparency. Hence, we have dissolved the builtin collection and now distinguish between bound and unbound builtins in the visualisation. Bound builtins are listed as labels at the associated edges. Unbound builtins are now illustrated using the diamond symbols. 
+## AOWLN Revised Builtin Collections
+We have noticed that the aggregation of multiple builtins into a builtin collection has created a limitation causing a loss of transparency. Hence, we have dissolved the builtin collection and now distinguish between bound and unbound builtins in the visualisation. Bound builtins are listed as labels at the associated edges. Unbound builtins are now illustrated using the diamond symbol. 
+
+![aowln revisited](https://user-images.githubusercontent.com/20316120/117967936-ead63200-b325-11eb-8e05-026ad499304e.png)
+
 
 ## Licensing
 AOWLN Visualiser is an open source product licensed under GPLv3
