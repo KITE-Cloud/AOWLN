@@ -208,8 +208,11 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
                     } catch (Exception ex) {
                         loadingAnimation.setVisible(false);
                         JOptionPane.showMessageDialog(null,
-                                "Please check whether aowln-image-engine.jar is located in your protégé folder \n" +
-                                        "or check whether your rule structure complies to the required AOWLN convention.\n" +
+                                "Please make sure aowln-image-engine.jar is located in your protégé folder.\n" +
+                                        "If this is the case, AOWLN Visualiser might have difficulites displaying your rule.\n" +
+                                        "We recommend using our proposed rule convention for writing SWRL rules. Our convention\n" +
+                                        "requires each rule fragment (rule head or rule body) to explicitly define concepts of\n" +
+                                        "variables used in properties or builtins of that specific rule fragment.\n" +
                                         "For more information see http://bit.ly/AOWLN-Paper.",
                                 "An error occured.",
                                 JOptionPane.ERROR_MESSAGE);
