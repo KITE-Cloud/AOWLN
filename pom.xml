@@ -13,8 +13,8 @@
     <groupId>de.thm</groupId>
     <artifactId>aowln_plugin</artifactId>
     <version>1.0.0</version>
-    <name>AOWLN-Tab</name>
-    <description>AOWLN-Tab Plugin for Desktop Protege 5.0+</description>
+    <name>AOWLN Visualiser</name>
+    <description>AOWLN Plugin for Desktop Protege 5.0+</description>
     <packaging>bundle</packaging>
 
     <properties>

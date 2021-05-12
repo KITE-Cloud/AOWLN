@@ -27,7 +27,7 @@ public class StartUpEngine implements ActionListener {
 
     JDialog fileChooserDialog;
     public void displayFileChooserDialog(JFrame owner) {
-        fileChooserDialog = new JDialog(owner, "Start-up");
+        fileChooserDialog = new JDialog(owner, "Settings");
         fileChooserDialog.setLayout(new BorderLayout());
         fileChooserDialog.add(getFileChooserPanel(), BorderLayout.CENTER);
         aContinue = new JButton("Continue");
@@ -46,7 +46,7 @@ public class StartUpEngine implements ActionListener {
     private JPanel getFileChooserPanel() {
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        JLabel label = new JLabel("Please select the Image-Engine.jar.");
+        JLabel label = new JLabel("<html>Please enter a path to aowln-image-engine.jar.  You can<br> download the file at https://github.com/KITE-Cloud/AOWLN</html>");
         panel.add(label, BorderLayout.NORTH);
         JPanel fileChooserPanel = new JPanel(new FlowLayout());
         pathField = new JTextField();

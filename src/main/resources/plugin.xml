@@ -2,20 +2,19 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-
 	<extension id="AOWLNTabComponent" point="org.protege.editor.core.application.WorkspaceTab">
-		<label value="AOWLN-Tab"/>
+		<label value="AOWLN"/>
 		<class value="org.protege.editor.owl.ui.OWLWorkspaceViewsTab"/>
 		<index value="X"/>
 		<editorKitId value="OWLEditorKit"/>
 		<defaultViewConfigFileName value="viewconfig-aowln.xml"/>
-   </extension>
+	</extension>
 
 	<extension id="AOWLNViewComponent" point="org.protege.editor.core.application.ViewComponent">
-		<label value="Aided Web Ontology Language Notation" />
-		<class value="view.AOWLNProtegeView" />
+		<label value="Visualisation of Advanced SWRL Rules with AOWLN"/>
+		<class value="view.AOWLNProtegeView"/>
 		<headerColor value="@org.protege.ontologycolor"/>
-		<category value="@org.protege.ontologycategory" />
+		<category value="@org.protege.ontologycategory"/>
 	</extension>
 
 </plugin>

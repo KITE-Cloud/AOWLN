@@ -5,7 +5,7 @@
 
         </CNode>
         <CNode>
-           <Component label="Aided Web Ontology Language Notation">
+           <Component label="Visualisation of Advanced SWRL Rules with AOWLN">
                <Property id="pluginId" value="aowln_plugin.AOWLNViewComponent"/>
            </Component>
         </CNode>
