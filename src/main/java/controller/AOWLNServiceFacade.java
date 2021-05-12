@@ -70,7 +70,7 @@ public class AOWLNServiceFacade {
         //create default concepts for body
         for (String key : keysToCheck) {
             if (!checkIfConceptExists(key, bodyClasses)) {
-                ClassAtomCustom defaultClassAtom = new ClassAtomCustom(key, "Thing");
+                ClassAtomCustom defaultClassAtom = new ClassAtomCustom(key, "Thing\n(" + key + ")");
                 bodyClasses.add(0, defaultClassAtom);
                 bodyTree.add(0, defaultClassAtom);
             }
@@ -89,7 +89,7 @@ public class AOWLNServiceFacade {
         for (String key : keysToCheck) {
             if (!checkIfConceptExists(key, headClasses)) {
                 if (!checkIfConceptExists(key, bodyClasses)) {
-                    ClassAtomCustom defaultClassAtom = new ClassAtomCustom(key, "Thing");
+                    ClassAtomCustom defaultClassAtom = new ClassAtomCustom(key, "Thing\n(" + key + ")");
                     headClasses.add(0, defaultClassAtom);
                     headTree.add(0, defaultClassAtom);
                 } else {
