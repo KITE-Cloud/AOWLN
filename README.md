@@ -1,5 +1,5 @@
 # AOWLN Visualiser
-![version](https://img.shields.io/badge/version-0.0.4-blue) ![license](https://img.shields.io/badge/license-GPLv3-purple) ![status](https://img.shields.io/badge/activity%20status-paused-lightgrey)
+![version](https://img.shields.io/badge/version-1.0.0-blue) ![license](https://img.shields.io/badge/license-GPLv3-purple) ![status](https://img.shields.io/badge/activity%20status-paused-lightgrey)
 
 AOWLN Visualiser is a prototypical software to visualise Semantic Web Rule Language (SWRL) using our proposed graphical notation AOWLN (Aided OWL Notation). The visualiser is written in Java and has been implemented as a plugin for the open source ontology editor Protégé. AOWLN Visualiser uses [Graphviz](https://www.graphviz.org/) to create and display graphs. 
 
@@ -28,7 +28,8 @@ To open the installed plugin in Protége navigate to: `Window -> Tabs -> AOWLN-T
 
 When using the AOWLN Tab in Protégé for the first time you will be requested to enter a local path to the external jar `aowln-image-engine.jar` that has been previously downloaded in step 1. To continue you must provide a valid path to the jar. Use the File-Explorer to select the jar file and click on the `Continue` button. 
 
-The plugin is now ready and can be used to visualize SWRL rules in the ontology. A dropdown menu located at the top of the plugin provides a list of all available rules in the ontology. Press the `Select` button to start the visualisation process. The plugin only visualises SWRL rules that comply to the rule convention presented in [AOWLN](http://bit.ly/AOWLN-Paper). Our convention requires each rule fragment (rule head or rule body) to explicitly define concepts of variables used in properties or builtins of that specific rule fragment.
+The plugin is now ready and can be used to visualize SWRL rules in the ontology. A dropdown menu located at the top of the plugin provides a list of all available rules in the ontology. Press the `Select` button to start the visualisation process. In previous versions the plugin only visualised SWRL rules that comply to the rule convention presented in [AOWLN](http://bit.ly/AOWLN-Paper). The convention requires each rule fragment (rule head or rule body) to explicitly define concepts of variables used in properties or builtins of that specific rule fragment.
+We have now removed this limitation with plugin `version 1.0.0` which should make it possible to visualise all types of SWRL rules. However, to ensure best comprehensibility of visualised rules we recommend making use of our proposed rule convention. 
 
 ## AOWLN Revised
 We have noticed that the aggregation of multiple builtins into a builtin collection has created a limitation causing a loss of transparency. Hence, we have dissolved the builtin collection and now distinguish between bound and unbound builtins in the visualisation. Bound builtins are listed as labels at the associated edges. Unbound builtins are now illustrated using the diamond symbols. 
