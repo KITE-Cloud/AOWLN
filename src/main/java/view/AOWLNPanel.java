@@ -3,7 +3,6 @@ package view;
 import controller.ViewController;
 import model.observer.ModelObserver;
 import model.observer.DataModel;
-import org.apache.commons.io.FileUtils;
 import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
@@ -18,10 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -85,8 +81,6 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         return "/";
     }
 
-
-
     private void initCanvasArea() {
 
         JPanel upperRightPane = new JPanel(new BorderLayout()),
@@ -108,8 +102,8 @@ public class AOWLNPanel extends JPanel implements ActionListener, ModelObserver,
         JScrollPane rightScrollPane = new JScrollPane(upperRightPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED),
                 leftScrollPane = new JScrollPane(upperLeftPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        JButton btn_rightCenter = new JButton("Center");
-        JButton btn_leftCenter = new JButton("Center");
+        //JButton btn_rightCenter = new JButton("Center");
+        //JButton btn_leftCenter = new JButton("Center");
 
         upperRightPane.add(rightCanvas, BorderLayout.CENTER);
         upperLeftPane.add(leftCanvas, BorderLayout.CENTER);

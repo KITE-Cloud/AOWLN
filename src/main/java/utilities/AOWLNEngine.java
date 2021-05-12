@@ -109,20 +109,39 @@ public class AOWLNEngine {
     public GraphListsForViz megaAlgorithmus(List<CustomSWRLAtom> ruleFragment) {
         HashMap<String, AOWLNElement> aowlnElements;
         HashMap<String, AOWLNEdgeElement> aowlnEdges;
-
         aowlnEdges = new HashMap<>();
         aowlnElements = new HashMap<>();
-        int beginBuiltInInRuleFragmentList = -1;
-        List<CustomSWRLAtom> done = new ArrayList<>();
-        Multimap<BuiltInAtomCustom, BuiltInAtomCustom> builtInCollectionsMMap = HashMultimap.create();
 
         String key = null;
         String label = null;
         AOWLNElementTypeEnum elementTypeEnum = null;
         AOWLNElement newElement = null;
         AOWLNEdgeElement newEdgeElement = null;
-        for (int i = 0; i < ruleFragment.size(); i++) {
-            CustomSWRLAtom swrlAtom = ruleFragment.get(i);
+
+        //Classes, data and object props
+        List<CustomSWRLAtom> standardAtoms = new ArrayList();
+        Map<String, List<BuiltInAtomCustom>> builtInAtomsMap = new HashMap<>();
+
+        for (CustomSWRLAtom swrlAtom : ruleFragment) {
+            if (swrlAtom instanceof ClassAtomCustom || swrlAtom instanceof ObjectPropertyAtomCustom || swrlAtom instanceof DataPropertyAtomCustom) {
+                standardAtoms.add(swrlAtom);
+            } else if (swrlAtom instanceof BuiltInAtomCustom) {
+                String firstArg = ((BuiltInAtomCustom) swrlAtom).getArguments()[0];
+                if (!builtInAtomsMap.keySet().contains(firstArg)) {
+                    //collect all builtin with same first arg
+                    List<BuiltInAtomCustom> builtinsWithSameFirstArg = new ArrayList<>();
+                    for (CustomSWRLAtom atom : ruleFragment) {
+                        if (atom instanceof BuiltInAtomCustom && ((BuiltInAtomCustom) atom).getArguments()[0].equals(firstArg)) {
+                            builtinsWithSameFirstArg.add((BuiltInAtomCustom) atom);
+                        }
+                        builtInAtomsMap.put(firstArg, builtinsWithSameFirstArg);
+                    }
+                }
+            }
+        }
+
+        //create AOWLN Elements for standard atoms: Classes, data and object props
+        for (CustomSWRLAtom swrlAtom : standardAtoms) {
             if (swrlAtom instanceof ClassAtomCustom) {
                 key = swrlAtom.getKey();
                 label = swrlAtom.getLabel();
@@ -131,7 +150,6 @@ public class AOWLNEngine {
             } else if (swrlAtom instanceof CustomSWRLProperty) {
                 CustomSWRLProperty customSWRLProperty = (CustomSWRLProperty) swrlAtom;
                 if (swrlAtom instanceof ObjectPropertyAtomCustom) {
-
                     elementTypeEnum = AOWLNElementTypeEnum.Property;
                     key = swrlAtom.getLabel() + swrlAtom.getKey();
                     label = swrlAtom.getLabel();
@@ -163,83 +181,69 @@ public class AOWLNEngine {
                     newEdgeElement = new AOWLNEdgeElement(newElement, secondElement, EdgeTypeEnum.Normal);
                     aowlnEdges.put(new UID().toString(), newEdgeElement);
                 }
-            } else if (swrlAtom instanceof BuiltInAtomCustom) {
-                if (beginBuiltInInRuleFragmentList == -1) {
-                    beginBuiltInInRuleFragmentList = i;
-                }
-                //Check if already exists, then create a BuiltInCollection
-                //elementTypeEnum = AOWLNElementTypeEnum.BuiltInCollection;
-                BuiltInAtomCustom builtInAtomCustom = (BuiltInAtomCustom) swrlAtom;
-                key = builtInAtomCustom.getArguments()[0];
-                boolean isBuiltInCollection = false;
+            }
+        }
 
-                for (int j = beginBuiltInInRuleFragmentList++; j < ruleFragment.size(); j++) {
-                    if (!ruleFragment.get(j).equals(builtInAtomCustom) && !done.contains(ruleFragment.get(j))) {
-                        String firstArgumentOfComparingBuiltIn = ((BuiltInAtomCustom) ruleFragment.get(j)).getArguments()[0];
-                        if (key.equals(firstArgumentOfComparingBuiltIn)) {
-                            isBuiltInCollection = true;
-                            done.add(ruleFragment.get(j));
-                            builtInCollectionsMMap.put(builtInAtomCustom, (BuiltInAtomCustom) ruleFragment.get(j));
-                        }
-                    }
+        //create AOWLN Elements for builtin
+        for (String firstArg : builtInAtomsMap.keySet()) {
+            List<BuiltInAtomCustom> relatedBuiltins = builtInAtomsMap.get(firstArg);
+            List<BuiltInAtomCustom> boundBuiltin = new ArrayList<>();
+
+            //there can only be 0 or 1 unbound builtins (e.g. add) but 0 to many bound builtins (lessThan, greaterThan, etc.)
+            BuiltInAtomCustom unboundBuiltin = null;
+            boolean hasUnboundBuiltin = false;
+            for (BuiltInAtomCustom atom : relatedBuiltins) {
+                if (!atom.isBound()) {
+                    hasUnboundBuiltin = true;
+                    unboundBuiltin = atom;
+                } else {
+                    boundBuiltin.add(atom);
                 }
-                if (isBuiltInCollection) {
-                    key = "BC" + builtInAtomCustom.getKey() + new UID().toString();
-                    label = "BC";
-                    elementTypeEnum = AOWLNElementTypeEnum.BuiltInCollection;
-                    newElement = new AOWLNElement(elementTypeEnum, key, label);
-                    aowlnElements.put(key, newElement);
-                    newEdgeElement = new AOWLNEdgeElement(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), newElement, EdgeTypeEnum.Normal);
+            }
+
+            //variable
+            AOWLNElement varElement = new AOWLNElement(AOWLNElementTypeEnum.Variable, firstArg, firstArg);
+            aowlnElements.put(firstArg, varElement);
+
+            if (hasUnboundBuiltin) {
+                key = firstArg + unboundBuiltin.getLabel();
+                label = unboundBuiltin.getLabel();
+
+                //diamond
+                elementTypeEnum = AOWLNElementTypeEnum.BuiltInCollection;
+                newElement = new AOWLNElement(elementTypeEnum, key, label);
+                aowlnElements.put(key, newElement);
+
+                //towards diamond
+                for (int k = 1; k < unboundBuiltin.getArguments().length; k++) {
+                    String edgeLabel = "";
+                    newEdgeElement = new AOWLNEdgeElement(aowlnElements.get(unboundBuiltin.getArguments()[k]), newElement, EdgeTypeEnum.BuiltIn, edgeLabel);
                     aowlnEdges.put(new UID().toString(), newEdgeElement);
-                    newEdgeElement = new AOWLNEdgeElement(newElement, aowlnElements.get(builtInAtomCustom.getArguments()[0]), EdgeTypeEnum.Normal);
-                    aowlnEdges.put(new UID().toString(), newEdgeElement);
-                    removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), aowlnElements.get(builtInAtomCustom.getArguments()[0]), aowlnEdges);
                 }
 
-                if (!isBuiltInCollection && !done.contains(swrlAtom)) {
-                    if (builtInAtomCustom.isBound()) {
-                        AOWLNElement variableElement = aowlnElements.get(builtInAtomCustom.getArguments()[0]);
-                        removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), variableElement, aowlnEdges);
-                        String edgeLabel = "";
-
-                        if (builtInAtomCustom.getLiterals().size() > 0) {
-                            edgeLabel = builtInAtomCustom.getLabel() + "(";
-                            //add builtin arguments to label
-                            /*for(int index =0; index< builtInAtomCustom.getArguments().length; index++){
-                                String arg = builtInAtomCustom.getArguments()[index];
-                                if(index == builtInAtomCustom.getArguments().length-1){
-                                    edgeLabel = edgeLabel+ arg;
-                                }else {
-                                    edgeLabel = edgeLabel+ arg+",";
-                                }
-                            }*/
-                            for (int index = 0; index < builtInAtomCustom.getLiterals().size(); index++) {
-                                String arg = builtInAtomCustom.getLiterals().get(index);
-                                if (index == builtInAtomCustom.getLiterals().size() - 1) {
-                                    edgeLabel = edgeLabel + arg;
-                                } else {
-                                    edgeLabel = edgeLabel + arg + ",";
-                                }
-                            }
-                            edgeLabel = edgeLabel + ")";
-                        } else {
-                            edgeLabel = builtInAtomCustom.getLabel();
-                        }
-
-                        newEdgeElement = new AOWLNEdgeElement(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), variableElement, EdgeTypeEnum.BuiltIn, edgeLabel);
-                        aowlnEdges.put(new UID().toString(), newEdgeElement);
-                        //  removeRedundantEdge(aowlnElements.get("EL" + builtInAtomCustom.getArguments()[0]), newElement, aowlnEdges);
-                    } else {
-                        newElement = new AOWLNElement(AOWLNElementTypeEnum.Variable, builtInAtomCustom.getArguments()[0], builtInAtomCustom.getArguments()[0]);
-                        aowlnElements.put(builtInAtomCustom.getArguments()[0], newElement);
-                        for (int k = 1; k < builtInAtomCustom.getArguments().length; k++) {
-                            String edgeLabel = "";
-                            edgeLabel = builtInAtomCustom.getLabel();
-
-                            newEdgeElement = new AOWLNEdgeElement(aowlnElements.get(builtInAtomCustom.getArguments()[k]), newElement, EdgeTypeEnum.BuiltIn, edgeLabel);
-                            aowlnEdges.put(new UID().toString(), newEdgeElement);
-                        }
+                if (boundBuiltin.size() > 0) {
+                    String labelConcat = "";
+                    for (BuiltInAtomCustom b : boundBuiltin) {
+                        labelConcat = labelConcat + determineBuiltinEdgeLabel(b) + "\n";
                     }
+                    newEdgeElement = new AOWLNEdgeElement(newElement, varElement, EdgeTypeEnum.BuiltIn, labelConcat);
+                    aowlnEdges.put(new UID().toString(), newEdgeElement);
+                } else {
+                    //edge from diamond to variable
+                    newEdgeElement = new AOWLNEdgeElement(newElement, varElement, EdgeTypeEnum.Normal);
+                    aowlnEdges.put(new UID().toString(), newEdgeElement);
+                }
+            } else if (!hasUnboundBuiltin && boundBuiltin.size() > 0) {
+                String labelConcat = "";
+                for (BuiltInAtomCustom b : boundBuiltin) {
+                    labelConcat = labelConcat + determineBuiltinEdgeLabel(b) + "\n";
+                }
+                AOWLNElement dataProp = null;
+                if (aowlnElements.keySet().contains("EL" + boundBuiltin.get(0).getArguments()[0])) {
+                    dataProp = aowlnElements.get("EL" + boundBuiltin.get(0).getArguments()[0]);
+                    newEdgeElement = new AOWLNEdgeElement(dataProp, varElement, EdgeTypeEnum.BuiltIn, labelConcat);
+                    removeRedundantEdge(aowlnElements.get("EL" + firstArg), aowlnElements.get(firstArg), aowlnEdges);
+                    aowlnEdges.put(new UID().toString(), newEdgeElement);
                 }
             }
         }
@@ -254,7 +258,6 @@ public class AOWLNEngine {
         }
 
         return createGraphListsForViz(aowlnElements, aowlnEdges);
-
     }
 
     private boolean removeRedundantEdge(AOWLNElement from, AOWLNElement to, HashMap<String, AOWLNEdgeElement> aowlnEdges) {
@@ -271,6 +274,28 @@ public class AOWLNEngine {
         return false;
     }
 
+    public String determineBuiltinEdgeLabel(BuiltInAtomCustom builtInAtomCustom) {
+        String edgeLabel = "";
+        if (builtInAtomCustom.getLiterals().size() > 0) {
+            edgeLabel = builtInAtomCustom.getLabel() + "(";
+            for (int index = 0; index < builtInAtomCustom.getLiterals().size(); index++) {
+                String arg = builtInAtomCustom.getLiterals().get(index);
+                if (index == builtInAtomCustom.getLiterals().size() - 1) {
+                    edgeLabel = edgeLabel + arg;
+                } else {
+                    edgeLabel = edgeLabel + arg + ",";
+                }
+            }
+            edgeLabel = edgeLabel + ")";
+        } else {
+            if (builtInAtomCustom.getArguments().length == 2) {
+                edgeLabel = builtInAtomCustom.getLabel() + "(" + builtInAtomCustom.getArguments()[1] + ")";
+            } else {
+                edgeLabel = builtInAtomCustom.getLabel();
+            }
+        }
+        return edgeLabel;
+    }
 
     public GraphListsForViz createGraphListsForViz(HashMap<String, AOWLNElement> aowlnElements, HashMap<String, AOWLNEdgeElement> aowlnEdges) {
 
@@ -306,6 +331,5 @@ public class AOWLNEngine {
         }
         return null;
     }
-
 
 }
