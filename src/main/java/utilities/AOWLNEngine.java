@@ -40,6 +40,7 @@ public class AOWLNEngine {
             if (element instanceof SWRLClassAtom) {
                 String label = stringSplit(element.getPredicate().toString());
                 String key = stringSplit(((SWRLClassAtom) element).getArgument().toString());
+                label = label +"\n("+key+")";
                 ClassAtomCustom classAtom = new ClassAtomCustom(key, label);
                 classAtoms.add(classAtom);
 
